@@ -42,5 +42,7 @@ Delete share folder
     Log    ${res}
 
 Check share folder had delete
+    ${res}    RUN    net use ${NAS_mount_point} \\\\${host}\\${fold_name} /user:${user} ${password}
+    LOG    ${res}
     Directory Should Not Exist    ${NAS_mount_point}
 
