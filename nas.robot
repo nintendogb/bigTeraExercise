@@ -33,6 +33,9 @@ diff file
 performance Test
     ${res}    PF.speedTest    ${NAS_mount_point}
     Log    ${res}
+NAS test with diskspd
+    ${res}    RUN    diskspd -d10 -F1 -w0 -r -b4k -o10 -c10M ${NAS_mount_point}\\testData.dat > ./diskspd.log
+    Log    ${res}
 umount NAS
     ${res}    RUN    net use ${NAS_mount_point} /delete
     LOG    ${res}
@@ -40,6 +43,7 @@ umount NAS
 Delete share folder
     ${res}    RUN    curl -b cookie -k "https://${host}${api_prefix}delete_shared_folder?name=${fold_name}"
     Log    ${res}
+    Sleep    10s    Wait for delete
 
 Check share folder had delete
     ${res}    RUN    net use ${NAS_mount_point} \\\\${host}\\${fold_name} /user:${user} ${password}
